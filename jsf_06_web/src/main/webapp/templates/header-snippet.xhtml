@@ -1,0 +1,38 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <div class="header" id="header" style="background-color: gray; padding: 10px;">
+	    <div class="card">
+            <h:form>
+                <p:menubar hideDelay="1000">
+                    <f:facet name="start">
+                        <h:outputLink value="main.xhtml">Galeria</h:outputLink>
+                    </f:facet>
+
+                    <p:menuitem value="Strona główna" outcome="main.xhtml">
+                        <h:graphicImage library="template" name="img/logo.jpg" style="height:75px; width:90px; margin:0; padding:0;" />
+                    </p:menuitem>
+
+                    <p:menuitem value="Galeria" icon="pi pi-fw pi-home" outcome="propertyList.xhtml" />
+                    <p:menuitem value="Dodaj" icon="pi pi-fw pi-plus-circle" action="#{loginBB.goToAddProperty}" />
+
+                    <!-- Nie zalogowany -->
+                    <p:menuitem value="Zaloguj się" icon="pi pi-fw pi-user" outcome="login.xhtml" rendered="#{empty loginBB.loggedUser}" />
+                    <p:menuitem value="Zarejestruj się" icon="pi pi-fw pi-user-plus" outcome="register.xhtml" rendered="#{empty loginBB.loggedUser}" />
+
+                    <!-- Po zalogowaniu -->
+                    <p:submenu label="Zalogowano na #{loginBB.loggedUser.firstName} (rola: #{roleBB.userRoles})" rendered="#{not empty loginBB.loggedUser}">
+                        <p:menuitem value="Wyloguj" action="#{loginBB.logout}" />
+                        <p:menuitem value="Edytuj profil" icon="pi pi-fw pi-user-edit" outcome="editProfile.xhtml" rendered="#{not empty loginBB.loggedUser}" />
+                        <p:menuitem value="Moja sztuka" icon="pi pi-fw pi-home" outcome="myProperties.xhtml" rendered="#{not empty loginBB.loggedUser}" />
+                    </p:submenu>
+
+                    <f:facet name="end">
+                    </f:facet>
+                </p:menubar>
+            </h:form>
+    	</div>
+    </div>
+</ui:composition>
